@@ -1,62 +1,81 @@
-function appendToDisplay(){
-    let num1, num2, num3;
+document.addEventListener("DOMContentLoaded", function(){
+    function createButton(){
+        const button = document.createElement("button");
+        button.textContent = "Run Calculator";
+        button.addEventListener("click", appendToDisplay);
+        document.body.appendChild(button);
+    }
 
+    function appendToDisplay() {
+        document.body.innerHTML = ""; 
     
-
-    while (true) {
-        num1 = window.prompt("Enter first number");
-        num1 = parseFloat(num1);
+        createButton();
+    
+        let num1 = getValidNumber("Enter first number");
+        if (num1 === null) {
+            return;
+        } 
+    
+        let num2 = getValidNumber("Enter second number");
+        if (num2 === null) {
+            return;
+        } 
+    
+        let sym1 = getValidOperator("Enter an operator (+, -, *, /, %, **)");
+        if (sym1 === null) {
+            return;
+        }  
+    
+       
         
-        if (!isNaN(num1) && num1 !== "") break;
-        alert("Please enter a valid number!");
+        switch(sym1) {
+            case "+":
+                document.write(num1 + num2);
+                break;
+            case "-":
+                document.write(num1 - num2);
+                break;
+            case "/":
+                document.write(num1 / num2);
+                break;
+            case "*":
+                document.write(num1 * num2);
+                break;
+            case "%":
+                document.write(num1 % num2);
+                break;
+            case "**":
+                document.write(num1 ** num2);
+                break;
+        }
     }
-
-    while (true) {
-        num2 = window.prompt("Enter second number");
-        num2 = parseFloat(num2);
+    
+    function getValidNumber(message) {
+        let num = prompt(message);
+        num = parseFloat(num);
         
-        if (!isNaN(num2) && num2 !== "") break;
-        alert("Please enter a valid number!");
-    }
-
-    while (true) {
-        sym1 = window.prompt("Enter an operator (+, -, *, /, %, **)");
+        if (isNaN(num)) {
+            alert("Please enter a valid number!");
+            return null; 
+        }
         
-        if (["+", "-", "*", "/", "%", "**"].includes(sym1)) break;
-        alert("Please enter a valid operator!");
-    }
-
-    
-    document.write("<button onclick='appendToDisplay()'>Run Calculator </button>");
-    
-    switch(sym1){
-        case "+":
-            document.write(num1 + num2);
-            break;
-        case "-":
-            document.write(num1 - num2);
-            break;  
-        case "/":
-            document.write(num1 / num2);
-            break;
-        case "*":
-            document.write(num1 * num2);
-            break;
-        case "%":
-            document.write(num1 % num2);
-            break;
-        case "**":
-            document.write(num1 ** num2);
-            break;
+        return num;
     }
     
-
-
-
-
+    function getValidOperator(message) {
+        let operator = prompt(message);
+        
+        if (!["+", "-", "*", "/", "%", "**"].includes(operator) ) {
+            alert("Please enter a valid operator!");
+            return null; 
+        }
+        
+        return operator;
+    }
+    createButton();
     
+});
 
-            
-    
-}
+
+
 
